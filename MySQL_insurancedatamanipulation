@@ -1,0 +1,78 @@
+
+-- Insurance Data Analysis Project
+
+CREATE DATABASE Insurance;
+
+USE Insurance;
+
+-- Table with min and max age, average insurance charge
+CREATE TABLE insurancestats
+	SELECT 
+		MIN(age) AS min_age,
+		MAX(age) AS max_age,
+        ROUND(AVG(charges), 2) AS avginsurance_charge
+	FROM insurance;
+
+
+-- Table of average charges based on region
+CREATE TABLE region_avgcharges
+	SELECT 
+		region, 
+		ROUND(AVG(charges), 2)
+	FROM insurance
+	GROUP BY region;
+
+
+-- Average insurance charges and children per age group
+-- Counts the number of people in each age group
+SELECT 
+    CASE 
+        WHEN age BETWEEN 18 AND 29 THEN '18-29'
+        WHEN age BETWEEN 30 AND 41 THEN '30-41'
+        WHEN age BETWEEN 42 AND 53 THEN '42-53'
+        WHEN age BETWEEN 54 AND 64 THEN '54-64'
+    END AS age_group,
+    ROUND(AVG(charges), 2) AS average_charges,
+    AVG(children),
+    ROUND(AVG(bmi), 2) AS average_bmi,
+    COUNT(*) AS AgeGroupCount
+FROM 
+    insurance
+GROUP BY 
+    age_group;
+
+-- Categorize BMI’s and see how many charges are with each group
+SELECT 
+    CASE 
+        WHEN bmi <= 18.5 THEN 'Underweight'
+        WHEN bmi BETWEEN 18.5 AND 25 THEN 'Healthy weight bmi'
+        WHEN bmi BETWEEN 25 AND 30 THEN 'Overweight'
+        WHEN bmi >= 30 THEN 'Obesity'
+    END AS bmi_group,
+    ROUND(AVG(charges), 2) AS average_charges
+FROM
+    insurance
+GROUP BY 
+    bmi_group;
+    
+
+-- Categorize people with children and see the average charges
+SELECT 
+    CASE 
+        WHEN children = 0 THEN '0 children'
+        WHEN children = 1 THEN '1 child'
+        WHEN children = 2 THEN '2 children'
+        WHEN children = 3 THEN '3 children'
+        WHEN children >= 4 THEN '4+ children'
+    END AS num_children,
+    ROUND(AVG(charges), 2) AS average_charges
+FROM
+    insurance
+GROUP BY 
+    num_children
+ORDER BY
+	num_children;
+
+
+
+ 
