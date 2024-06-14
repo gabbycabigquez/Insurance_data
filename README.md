@@ -1,6 +1,5 @@
 # Insurance_data
-Insurance data manipulation - 
-This is a personal project demonstrating data manipulation through SQL using Insurance data set
+This code is demonstrating data analysis through SQL using Insurance data set
 
 # Content
 This dataset contains 1338 rows of insured data, where the Insurance charges are given against the following attributes of the insured: Age, Sex, BMI, Number of Children, Smoker and Region. There are no missing or undefined values in the dataset.
